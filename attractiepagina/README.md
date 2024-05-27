@@ -1,2 +1,0 @@
-# Attractiepagina
-Module WDV-IV
