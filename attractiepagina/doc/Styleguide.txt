@@ -1,0 +1,13 @@
+
+--- FONTS ---
+Alle fonts zijn al ingeladen, je kunt ze direct gebruiken.
+Speciaal-font:  Oxanium (gewicht 600, 'SemiBold')
+Standaard-font: Roboto  (gewichten 300, 'Light' / 400, 'Regular' / 700, 'Bold')
+
+--- KLEUREN ---
+Achtergrond attractiekaartje: #F5FCF8
+Achtergrond attractiekaartje, rechtse deel achter knop: #FFFFFF
+Lijn tussen linkse en rechtse deel achtergrond: #E5E5E5
+Tekst attractiekaartje: #0B351D
+Tekst attractiekaartje, themagebied + lengte: #849D8E
+Knop achtergrondkleur: #3ED67D
