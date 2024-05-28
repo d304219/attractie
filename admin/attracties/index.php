@@ -93,9 +93,24 @@ if(!isset($_SESSION['user_id']))
         $statement->execute();
         }
 
+        
+
 
         $rides = $statement->fetchAll(PDO::FETCH_ASSOC);    
         ?>
+
+<div class="status">
+            <p><span class="badge text-bg-danger">Warning</span><strong><?php echo count($rides) ?><i class="fa-solid fa-triangle-exclamation" style="color: #ff4013;"></i></strong></p>
+
+            <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="GET">
+                <select name="status">
+                    <option value=""> - kies status om te filteren - </option>
+                    <option value="1" <?php if ($status_filter === '1') echo 'selected'; ?>>prioriteiten</option>
+                    <option value="0" <?php if ($status_filter === '0') echo 'selected'; ?>>Geen prioriteiten</option>
+                </select>
+                <input type="submit" value="filter">
+            </form>
+        </div>
 
                 
             <?php foreach($rides as $ride): ?>
