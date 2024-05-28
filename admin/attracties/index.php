@@ -31,6 +31,26 @@ if(!isset($_SESSION['user_id']))
         
 
         <div class="card-container">
+                    
+        <?php
+        require_once '../../conn.php';
+
+        $status_filter = isset($_GET['status']) ? $_GET['status'] : '';
+
+
+        $query = "SELECT * FROM rides";
+        if ($status_filter !== '') {
+        $query .= " WHERE themeland = :status"; 
+        $statement = $conn->prepare($query);
+        $statement->execute([':status' => $status_filter]);
+        } else {
+        $statement = $conn->prepare($query);
+        $statement->execute();
+        }
+
+
+        $rides = $statement->fetchAll(PDO::FETCH_ASSOC);    
+        ?>
 <<<<<<< HEAD
             <table>
                 <tr>
