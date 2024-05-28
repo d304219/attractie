@@ -18,7 +18,7 @@ require_once 'backend/config.php';
         }
         ?>
         <div class="wrapper">
-
+        <h1>Login</h1>
             <form action="backend/loginController.php" method="POSt">
 
             <div class="form-group">
