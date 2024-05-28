@@ -6,7 +6,7 @@ require_once 'admin/backend/config.php';
 <!doctype html>
 <html lang="nl">
     <?php require_once "head.php";?>
-    <title>Attractiepagina</title>
+    <title>Attractiepaginal</title>
 <body>
 
     <?php require_once 'header.php'; ?>
