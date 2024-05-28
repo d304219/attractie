@@ -1,6 +1,6 @@
 <header>
     <div class="container header">
-        <img src="<?php echo $base_url; ?>/img/logo-big-v4.png" alt="logo" class="logo">
+        <a href="index.php"><img src="<?php echo $base_url; ?>/img/logo-big-v4.png" alt="logo" class="logo"></a>
         <h1>Attracties</h1>
         <nav>     
             <a href="<?php echo $base_url ?>/index.php">Attracties</a>
@@ -15,4 +15,3 @@
     </div>
 </header>
 
-        

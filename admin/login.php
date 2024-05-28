@@ -38,6 +38,18 @@ require_once 'backend/config.php';
 </body>
 
 <style>
+     .wrapper h1 {
+        position: relative;
+        z-index: 1;
+        background: #FFFFFF;
+        max-width: 400px;
+        margin: 0 auto 100px;
+        margin:20px auto 20px;
+        padding: 45px;
+        text-align: center;
+        border-radius: 15px;
+        box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
+    }
    form {
     position: relative;
     z-index: 1;

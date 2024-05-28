@@ -13,6 +13,7 @@ if(!isset($_SESSION['user_id']))
 <html lang="nl">
 
 <?php require_once "../../head.php";?>
+    <title>Attractiepagina / Admin</title>
 
 <body>
 

@@ -13,7 +13,7 @@ require_once 'backend/config.php';
     <?php require_once '../header.php'?>
         <div class="wrapper">
 
-        <h1>Register</h1> <!-- Hier staat nu de h1 -->
+        <h1>Register</h1> 
             <form action="backend/registerController.php" method="POSt">
 
             <div class="form-group">
@@ -26,10 +26,10 @@ require_once 'backend/config.php';
                 <input type="password"name="password"id="password">
             </div>
             <div class="form-group">
-                <label for="verifyPassword">Bevestig Wachtwoord</label>
+                <label for="verifyPassword">Bevestig wachtwoord</label>
                 <input type="password" name="verifyPassword" id="verifyPassword" required>
             </div>
-            <input class= "submit" type="submit"value="Login">
+            <input class= "submit" type="submit"value="Register">
 
             </form>
         </div>
@@ -42,11 +42,11 @@ require_once 'backend/config.php';
         background: #FFFFFF;
         max-width: 400px;
         margin: 0 auto 100px;
-        margin-top:20px;
+        margin:20px auto 20px;
         padding: 45px;
         text-align: center;
         border-radius: 15px;
-        box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+        box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
     }
 
     form {
