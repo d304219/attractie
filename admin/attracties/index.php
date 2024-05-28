@@ -41,8 +41,30 @@ if(!isset($_SESSION['user_id']))
         $statement->execute();
         $rides = $statement->fetchAll(PDO::FETCH_ASSOC);
         ?>
+        
 
         <div class="card-container">
+        
+        <?php
+        require_once '../../conn.php';
+
+        $status_filter = isset($_GET['status']) ? $_GET['status'] : '';
+
+
+        $query = "SELECT * FROM rides";
+        if ($status_filter !== '') {
+        $query .= " WHERE themeland = :status"; 
+        $statement = $conn->prepare($query);
+        $statement->execute([':status' => $status_filter]);
+        } else {
+        $statement = $conn->prepare($query);
+        $statement->execute();
+        }
+
+
+        $rides = $statement->fetchAll(PDO::FETCH_ASSOC);    
+        ?>
+
                 
             <?php foreach($rides as $ride): ?>
                 <?php if($ride['fast_pass'] == "0"): ?>
@@ -71,6 +93,7 @@ if(!isset($_SESSION['user_id']))
                             <img src="<?php echo $base_url; ?>/img/attracties/<?php echo $ride['img_file']; ?>" alt="<?php echo $ride['title']; ?>">
                         </div>
                         <div class="card-info">
+
                             <div class="card-info-title">
                                 <h4><span style="text-transform:uppercase;"><?php echo $ride['themeland']; ?></span></h4>
                                 <h3><?php echo $ride['title']; ?></h3>
