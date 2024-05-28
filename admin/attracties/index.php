@@ -12,27 +12,14 @@ if(!isset($_SESSION['user_id']))
 <!doctype html>
 <html lang="nl">
 
-<head>
-    <title>Attractiepagina / Admin</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;600;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="<?php echo $base_url; ?>/css/normalize.css">
-    <link rel="stylesheet" href="<?php echo $base_url; ?>/css/main.css">
-    <link rel="icon" href="<?php echo $base_url; ?>/favicon.ico" type="image/x-icon" />
-
-    
-
-
-</head>
+<?php require_once "../../head.php";?>
 
 <body>
 
     <?php require_once '../../header.php'; ?>
     <div class="container">
 
-        <a href="create.php">Nieuwe attractie maken &gt;</a>
+        <a href="create.php">+ Attractie Toevoegen</a>
 
         <?php
         require_once '../backend/conn.php';
@@ -44,6 +31,31 @@ if(!isset($_SESSION['user_id']))
         
 
         <div class="card-container">
+<<<<<<< HEAD
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Themeland</th>
+                    <th>Img File</th>
+                    <th>Description</th>
+                    <th>Min_length</th>
+                    <th>New</th>
+                </tr>
+                <?php foreach($rides as $ride): ?>
+                    <tr>
+                        <td><?php echo $ride['id']; ?></td>
+                        <td><?php echo $ride['title']; ?></td>
+                        <td><?php echo $ride['themeland']; ?></td>
+                        <td><?php echo $ride['img_file']; ?></td>
+                        <td><?php echo $ride['description']; ?></td>
+                        <td><?php echo $ride['min_length']; ?></td>
+                        <td><?php echo $ride['fast_pass']?></td>
+                        <td><a href="edit.php?id=<?php echo $ride['id']; ?>"><i class="fa-regular fa-pen-to-square"></i></a></td>
+                    </tr>
+                <?php endforeach; ?>
+            </table>
+=======
         
         <?php
         require_once '../../conn.php';
@@ -125,6 +137,7 @@ if(!isset($_SESSION['user_id']))
                     </div>
                 <?php endif; ?>
             <?php endforeach; ?>
+>>>>>>> 812711b564ae14716cb3b1ad6a5c38504f396f2c
         </div>
 
     </div>

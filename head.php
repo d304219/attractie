@@ -6,4 +6,5 @@
     <link rel="stylesheet" href="<?php echo $base_url; ?>/css/normalize.css">
     <link rel="stylesheet" href="<?php echo $base_url; ?>/css/main.css">
     <link rel="icon" href="<?php echo $base_url; ?>/favicon.ico" type="image/x-icon" />
+    <script src="https://kit.fontawesome.com/7fa65373f3.js" crossorigin="anonymous"></script>
 </head>
