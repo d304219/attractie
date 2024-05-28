@@ -15,8 +15,6 @@ require_once 'admin/backend/config.php';
         <?php require_once 'header.php'; ?>
     <div class="container">
 
-        <a href="create.php">Nieuwe attractie maken &gt;</a>
-
         <?php
         require_once 'admin/backend/conn.php';
         $query = "SELECT * FROM rides";
