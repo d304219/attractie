@@ -54,6 +54,10 @@ if(!isset($_SESSION['user_id']))
                 <input type="file" name="img_file" id="img_file" class="form-input">
             </div>
             <div class="form-group">
+                <label for="description">Beschrijving:</label>
+                <textarea name="description" id="description" class="form-input" rows="4"><?php echo $ride['description']; ?></textarea>
+            </div>
+            <div class="form-group">
                 <label for="fast_pass">FAST PASS:</label>
                 <input type="checkbox" name="fast_pass" id="fast_pass" <?php if($ride['fast_pass']) echo 'checked'; ?>>
                 <label for="fast_pass">Voor deze attractie is een FAST PASS nodig.</label>
