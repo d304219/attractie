@@ -13,24 +13,31 @@ if($action == 'create')
 {
     //Validatie
     $title = $_POST['title'];
+    $themeland = $_POST['themeland'];
+    $description = isset($_POST['description']) ? $_POST['description'] : ''; // Controleer of de beschrijving is ingesteld
+
     if(empty($title))
     {
         $errors[] = "Vul een titel in!";
     }
 
-    $themeland = $_POST['themeland'];
     if(empty($themeland))
     {
         $errors[] = "Vul een themagebied in!";
     }
 
+    if(empty($description)) // Controleer of de beschrijving leeg is
+    {
+        $errors[] = "Vul een beschrijving in!";
+    }
+
     if(isset($_POST['fast_pass']))
     {
-        $fast_pass = true;
+        $fast_pass = 1;
     }
     else
     {
-        $fast_pass = false;
+        $fast_pass = 0;
     }
 
     $target_dir = "../../img/attracties/";
@@ -52,11 +59,12 @@ if($action == 'create')
 
     //Query
     require_once 'conn.php';
-    $query = "INSERT INTO rides (title, themeland, fast_pass, img_file) VALUES(:title, :themeland, :fast_pass, :img_file)";
+    $query = "INSERT INTO rides (title, themeland, img_file, description, fast_pass ) VALUES(:title, :themeland, :img_file, :description,  :fast_pass)";
     $statement = $conn->prepare($query);
     $statement->execute([
         ":title" => $title,
         ":themeland" => $themeland,
+        ":description" => $description,
         ":fast_pass" => $fast_pass,
         ":img_file" => $target_file,
     ]);
@@ -65,18 +73,20 @@ if($action == 'create')
     exit;
 }
 
+
 if($action == "update")
 {
     $id = $_POST['id'];
     $title = $_POST['title'];
     $themeland = $_POST['themeland'];
+    $description = $_POST['description'];
     if(isset($_POST['fast_pass']))
     {
-        $fast_pass = true;
+        $fast_pass = 1;
     }
     else
     {
-        $fast_pass = false;
+        $fast_pass = 0;
     }
 
     if(empty($_FILES['img_file']['name']))
@@ -105,11 +115,12 @@ if($action == "update")
 
     //Query
     require_once 'conn.php';
-    $query = "UPDATE rides SET title = :title, themeland = :themeland, fast_pass = :fast_pass, img_file = :img_file WHERE id = :id";
+    $query = "UPDATE rides SET title = :title, themeland = :themeland, img_file = :img_file, description = :description, fast_pass = :fast_pass WHERE id = :id";
     $statement = $conn->prepare($query);
     $statement->execute([
         ":title" => $title,
         ":themeland" => $themeland,
+        ":description" => $description,
         ":fast_pass" => $fast_pass,
         ":img_file" => $target_file,
         ":id" => $id

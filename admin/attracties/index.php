@@ -20,7 +20,7 @@ if(!isset($_SESSION['user_id']))
     <?php require_once '../../header.php'; ?>
     <div class="container">
 
-        <a href="create.php">+ Attractie Toevoegen</a>
+        
 
         <?php
         require_once '../backend/conn.php';
@@ -32,12 +32,15 @@ if(!isset($_SESSION['user_id']))
         
 
         <div class="container">
+        <a href="create.php">+ Attractie Toevoegen</a>
     
         <div class="top">
         <p>Totaal aantal Rides: <strong><?php echo count($rides); ?></strong></p>
 
         <form action="" method="GET">
     <?php
+
+    
     $query = "SELECT * FROM rides";
 
     if (!empty($_GET['type'])) {

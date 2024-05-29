@@ -10,7 +10,7 @@ require_once 'admin/backend/config.php';
 <body>
 
     <?php require_once 'header.php'; ?>
-        <h1>Attracties</h1>
+        
 
         <?php require_once 'header.php'; ?>
     <div class="container">
@@ -22,6 +22,9 @@ require_once 'admin/backend/config.php';
         $statement->execute();
         $rides = $statement->fetchAll(PDO::FETCH_ASSOC);
         ?>
+        <h1>Attracties</h1>
+
+<p>Totaal aantal Attracties: <strong><?php echo count($rides); ?></strong></p>
 
         <div class="card-container">
                 
