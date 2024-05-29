@@ -36,30 +36,36 @@ if(!isset($_SESSION['user_id']))
         <div class="top">
         <p>Totaal aantal Rides: <strong><?php echo count($rides); ?></strong></p>
 
-            <form action="" method="GET">
-            <?php
-            $query = "SELECT * FROM rides";
+        <form action="" method="GET">
+    <?php
+    $query = "SELECT * FROM rides";
 
-            if (!empty($_GET['type'])) {
-                $query .= " WHERE themeland = '{$_GET['themeland']}'";
-            }
+    if (!empty($_GET['type'])) {
+        $query .= " WHERE themeland = :type";
+    }
 
-            $query .= " ORDER BY themeland DESC";
+    $query .= " ORDER BY themeland DESC";
 
-            $statement = $conn->prepare($query);
-            $statement->execute();
-            $rides = $statement->fetchAll(PDO::FETCH_ASSOC);
-        ?>
+    $statement = $conn->prepare($query);
 
-                <select name="type" id="group">
-                    <option value="">-Kies een type-</option>
-                    <option value="waterland">Waterland</option>
-                    <option value="familyland">Familyland</option>
-                    <option value="adventureland">Adventureland</option>
-                </select>
+    if (!empty($_GET['type'])) {
+        $statement->bindParam(':type', $_GET['type']);
+    }
 
-                <input type="submit" value="Filter">
-            </form>
+    $statement->execute();
+    $rides = $statement->fetchAll(PDO::FETCH_ASSOC);
+    ?>
+
+    <select name="type" id="group">
+        <option value="">-Kies een type-</option>
+        <option value="waterland">Waterland</option>
+        <option value="familyland">Familyland</option>
+        <option value="adventureland">Adventureland</option>
+    </select>
+
+    <input type="submit" value="Filter">
+</form>
+
 
         </div>
 
