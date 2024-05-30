@@ -32,6 +32,8 @@ if(!isset($_SESSION['user_id']))
         
 
         <div class="container">
+        <h1>Admin</h1>
+        
         <a href="create.php">+ Attractie Toevoegen</a>
     
         <div class="top">
@@ -60,7 +62,7 @@ if(!isset($_SESSION['user_id']))
     ?>
 
     <select name="type" id="group">
-        <option value="">-Kies een type-</option>
+        <option value="">-Kies een Themaland-</option>
         <option value="waterland">Waterland</option>
         <option value="familyland">Familyland</option>
         <option value="adventureland">Adventureland</option>

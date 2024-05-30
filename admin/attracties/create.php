@@ -18,7 +18,8 @@ if(!isset($_SESSION['user_id']))
 <body>
 
     <?php require_once '../../header.php'; ?>
-    <div class="container">
+    <link rel="stylesheet" href="<?php echo $base_url; ?>/css/admincrud.css">
+    <div class="container adminCrud">
 
         <h2>Nieuwe attractie</h2>
 

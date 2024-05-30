@@ -12,12 +12,14 @@ if(!isset($_SESSION['user_id']))
 <!doctype html>
 <html lang="nl">
 <?php require_once "../../head.php";?>
+<link rel="stylesheet" href="<?php echo $base_url; ?>/css/admincrud.css">
+
 <title>Attractiepagina / Admin</title>
 
 <body>
 
     <?php require_once '../../header.php'; ?>
-    <div class="container">
+    <div class="container adminCrud">
 
         <h2>Attractie aanpassen</h2>
 

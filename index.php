@@ -13,6 +13,16 @@ require_once 'admin/backend/config.php';
         
 
         <?php require_once 'header.php'; ?>
+
+<div class="hero">
+    <div class="hero-content">
+        <h1>Welkom Bij</h1>
+        <!-- img spartan -->
+        <img src="img/Spartan_Logo_Text_Only.png" alt="logo">
+        <p>Ontdek spannende en adembenemende ritten!</p>
+    </div>
+</div>
+
     <div class="container">
 
         <?php
@@ -23,8 +33,7 @@ require_once 'admin/backend/config.php';
         $rides = $statement->fetchAll(PDO::FETCH_ASSOC);
         ?>
 
-        <div class="hero">
-        </div>
+
 
         <h1>Attracties</h1>
 
