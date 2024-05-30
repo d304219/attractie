@@ -31,6 +31,11 @@ if($action == 'create')
         $errors[] = "Vul een beschrijving in!";
     }
 
+    if(!is_numeric($_POST['min_length']))
+    {
+        $errors[] = "Vul een getal in!";
+    }
+
     if(isset($_POST['fast_pass']))
     {
         $fast_pass = 1;
@@ -59,7 +64,7 @@ if($action == 'create')
 
     //Query
     require_once 'conn.php';
-    $query = "INSERT INTO rides (title, themeland, img_file, description, fast_pass ) VALUES(:title, :themeland, :img_file, :description,  :fast_pass)";
+    $query = "INSERT INTO rides (title, themeland, img_file, description, fast_pass, min_length ) VALUES(:title, :themeland, :img_file, :description,  :fast_pass, :min_length)";
     $statement = $conn->prepare($query);
     $statement->execute([
         ":title" => $title,
@@ -67,6 +72,7 @@ if($action == 'create')
         ":description" => $description,
         ":fast_pass" => $fast_pass,
         ":img_file" => $target_file,
+        ":min_length" => $_POST['min_length']
     ]);
 
     header("Location: ../attracties/index.php");
@@ -80,6 +86,7 @@ if($action == "update")
     $title = $_POST['title'];
     $themeland = $_POST['themeland'];
     $description = $_POST['description'];
+    $min_length = $_POST['min_length'];
     if(isset($_POST['fast_pass']))
     {
         $fast_pass = 1;
@@ -115,7 +122,7 @@ if($action == "update")
 
     //Query
     require_once 'conn.php';
-    $query = "UPDATE rides SET title = :title, themeland = :themeland, img_file = :img_file, description = :description, fast_pass = :fast_pass WHERE id = :id";
+    $query = "UPDATE rides SET title = :title, themeland = :themeland, img_file = :img_file, description = :description, fast_pass = :fast_pass, min_length = :min_length WHERE id = :id";
     $statement = $conn->prepare($query);
     $statement->execute([
         ":title" => $title,
@@ -123,6 +130,7 @@ if($action == "update")
         ":description" => $description,
         ":fast_pass" => $fast_pass,
         ":img_file" => $target_file,
+        ":min_length" => $min_length,
         ":id" => $id
     ]);
 
