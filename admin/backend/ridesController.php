@@ -36,13 +36,13 @@ if($action == 'create')
         $errors[] = "Vul een getal in!";
     }
 
-    if(isset($_POST['fast_pass']))
+    if(isset($_POST['new']))
     {
-        $fast_pass = 1;
+        $new = 1;
     }
     else
     {
-        $fast_pass = 0;
+        $new = 0;
     }
 
     $target_dir = "../../img/attracties/";
@@ -64,13 +64,13 @@ if($action == 'create')
 
     //Query
     require_once 'conn.php';
-    $query = "INSERT INTO rides (title, themeland, img_file, description, fast_pass, min_length ) VALUES(:title, :themeland, :img_file, :description,  :fast_pass, :min_length)";
+    $query = "INSERT INTO rides (title, themeland, img_file, description, new, min_length ) VALUES(:title, :themeland, :img_file, :description,  :new, :min_length)";
     $statement = $conn->prepare($query);
     $statement->execute([
         ":title" => $title,
         ":themeland" => $themeland,
         ":description" => $description,
-        ":fast_pass" => $fast_pass,
+        ":new" => $new,
         ":img_file" => $target_file,
         ":min_length" => $_POST['min_length']
     ]);
@@ -87,13 +87,13 @@ if($action == "update")
     $themeland = $_POST['themeland'];
     $description = $_POST['description'];
     $min_length = $_POST['min_length'];
-    if(isset($_POST['fast_pass']))
+    if(isset($_POST['new']))
     {
-        $fast_pass = 1;
+        $new = 1;
     }
     else
     {
-        $fast_pass = 0;
+        $new = 0;
     }
 
     if(empty($_FILES['img_file']['name']))
@@ -122,13 +122,13 @@ if($action == "update")
 
     //Query
     require_once 'conn.php';
-    $query = "UPDATE rides SET title = :title, themeland = :themeland, img_file = :img_file, description = :description, fast_pass = :fast_pass, min_length = :min_length WHERE id = :id";
+    $query = "UPDATE rides SET title = :title, themeland = :themeland, img_file = :img_file, description = :description, new = :new, min_length = :min_length WHERE id = :id";
     $statement = $conn->prepare($query);
     $statement->execute([
         ":title" => $title,
         ":themeland" => $themeland,
         ":description" => $description,
-        ":fast_pass" => $fast_pass,
+        ":new" => $new,
         ":img_file" => $target_file,
         ":min_length" => $min_length,
         ":id" => $id

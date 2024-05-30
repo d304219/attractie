@@ -64,9 +64,9 @@ if(!isset($_SESSION['user_id']))
                 <input type="number" name="min_length" id="min_length" class="form-input" value="<?php echo $ride['min_length']; ?>">
             </div>
             <div class="form-group">
-                <label for="fast_pass">FAST PASS:</label>
-                <input type="checkbox" name="fast_pass" id="fast_pass" <?php if($ride['fast_pass']) echo 'checked'; ?>>
-                <label for="fast_pass">Voor deze attractie is een FAST PASS nodig.</label>
+                <label for="new">New Ride:
+                <input type="checkbox" name="new" id="new" <?php if($ride['new']) echo 'checked'; ?>>
+                </label>
             </div>
 
             <input type="submit" value="Attracties aanpassen">

@@ -46,7 +46,7 @@ if(!isset($_SESSION['user_id']))
             
 
             <div class="form-group">
-                <label for="description">description</label>
+                <label for="description">Beschrijving</label>
                 <textarea name="description" id="description" cols="65" rows="10"></textarea>
             </div>
             
@@ -57,9 +57,9 @@ if(!isset($_SESSION['user_id']))
 
 
             <div class="form-group">
-                <label for="fast_pass">FAST PASS:</label>
-                <input type="checkbox" name="fast_pass" id="fast_pass">
-                <label for="fast_pass">Voor deze attractie is een FAST PASS nodig.</label>
+                <label for="new">New Ride:
+                <input type="checkbox" name="new" id="new">
+                </label>
             </div>
 
 

@@ -44,6 +44,9 @@ require_once 'admin/backend/config.php';
             <?php foreach($rides as $ride): ?>
                     <div class="card">
                         <div class="card-img">
+                        <?php if($ride['new'] != 0): ?>
+                            <div class="new">Nieuw!</div>
+                        <?php endif; ?>
                             <img src="<?php echo $base_url; ?>/img/attracties/<?php echo $ride['img_file']; ?>" alt="<?php echo $ride['title']; ?>">
                         </div>
                         <div class="card-info">
