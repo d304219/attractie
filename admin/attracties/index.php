@@ -43,7 +43,7 @@ if(!isset($_SESSION['user_id']))
     
     $query = "SELECT * FROM rides";
 
-    if (!empty($_GET['themeland'])) {
+    if (!empty($_GET['type'])) {
         $query .= " WHERE themeland = :type";
     }
 
@@ -51,8 +51,8 @@ if(!isset($_SESSION['user_id']))
 
     $statement = $conn->prepare($query);
 
-    if (!empty($_GET['themeland'])) {
-        $statement->bindParam(':themeland', $_GET['themeland']);
+    if (!empty($_GET['type'])) {
+        $statement->bindParam(':type', $_GET['type']);
     }
 
     $statement->execute();

@@ -22,6 +22,10 @@ require_once 'admin/backend/config.php';
         $statement->execute();
         $rides = $statement->fetchAll(PDO::FETCH_ASSOC);
         ?>
+
+        <div class="hero">
+        </div>
+
         <h1>Attracties</h1>
 
 <p>Totaal aantal Attracties: <strong><?php echo count($rides); ?></strong></p>

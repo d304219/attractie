@@ -130,7 +130,7 @@ header{
     padding-bottom: 1rem;
     background-image: url(../img/park01.jpg);
     background-position: center;
-    box-shadow: inset 0 0 0 1000px rgba(29, 98, 58, 0.5);
+    box-shadow: inset 0 0 0 1000px rgba(29, 85, 98, 0.5);
 }
 
 header, nav a{
@@ -181,7 +181,16 @@ th{
     text-align: left;
 }
 
-
+.hero{
+    background-image: url(../img/hero.jpg);
+    background-position: center;
+    background-size: cover;
+    color: #f5fcf8;
+    text-align: center;
+    box-shadow: inset 0 0 0 1000px rgba(29, 85, 98, 0.5);
+    height: 80vh;
+    width: 100%;
+}
 
 
 
