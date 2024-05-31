@@ -571,3 +571,81 @@ a:hover {
   text-decoration: underline;
 }
 
+footer {
+  background-color: #333;
+  color: #fff;
+  padding: 10px 0;
+  text-align: center;
+  margin-top: 20px; /* Toegevoegde margin */
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between; /* Toegevoegd om de inhoud links en rechts te plaatsen */
+  align-items: center;
+}
+
+.footer-content {
+  margin-bottom: 10px;
+}
+
+.footer-content h3 {
+  font-size: 1rem;
+  margin-bottom: 5px;
+}
+
+.footer-content p {
+  margin-bottom: 5px;
+}
+
+.social-links {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.social-links li {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.social-links li a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 0.8rem;
+}
+
+.footer-links {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex; /* Toegevoegd om de items naast elkaar te plaatsen */
+}
+
+.footer-links li {
+  margin-right: 20px; /* Afstand tussen de items aanpassen */
+}
+
+.footer-links li:last-child {
+  margin-right: 0; /* Geen marge aan de rechterkant voor het laatste item */
+}
+
+.footer-links li a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 0.8rem;
+}
+
+.footer-bottom {
+  background-color: #222;
+  text-align: center;
+  padding: 5px 0;
+  margin-top: 10px;
+}
+
+.footer-bottom p {
+  margin: 0;
+  font-size: 0.7rem;
+}

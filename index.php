@@ -70,7 +70,7 @@ require_once 'admin/backend/config.php';
     </div>
         </main>
     </div>
-
+    <?php require_once 'footer.php'; ?>
 </body>
 
 </html>
