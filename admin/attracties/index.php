@@ -85,7 +85,7 @@ if(!isset($_SESSION['user_id']))
                     <td><?php echo $ride['img_file']; ?></td>
                     <td><?php echo $ride['description']; ?></td>
                     <td><?php echo $ride['min_length']; ?></td>
-                    <td><?php echo $ride['fast_pass']?></td>
+                    <td><?php echo $ride['new']?></td>
                     <td><a href="edit.php?id=<?php echo $ride['id']; ?>"><i class="fa-regular fa-pen-to-square"></i></a></td>
                 </tr>
             <?php endforeach; ?>
