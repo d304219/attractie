@@ -27,6 +27,7 @@ if ($password != $verifyPassword) {
     die();
 }
 
+
 // Controleer of de gebruikersnaam al bestaat
 $query = "SELECT * FROM users WHERE username = :username";
 $statement = $conn->prepare($query);
