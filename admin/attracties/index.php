@@ -13,58 +13,58 @@ if(!isset($_SESSION['user_id']))
 <html lang="nl">
 
 <?php require_once "../../head.php";?>
-    <title>Attractiepagina / Admin</title>
+<title>Attractiepagina / Admin</title>
 
 <body>
 
-    <?php require_once '../../header.php'; ?>
+<?php require_once '../../header.php'; ?>
+<div class="container">
+
+    <?php
+    require_once '../backend/conn.php';
+    $query = "SELECT * FROM rides ORDER BY id ASC";  // Hier sorteren we de resultaten op ID in oplopende volgorde
+    $statement = $conn->prepare($query);
+    $statement->execute();
+    $rides = $statement->fetchAll(PDO::FETCH_ASSOC);
+    ?>
+
     <div class="container">
-
-        <?php
-        require_once '../backend/conn.php';
-        $query = "SELECT * FROM rides ORDER BY id ASC";  // Hier sorteren we de resultaten op ID in oplopende volgorde
-        $statement = $conn->prepare($query);
-        $statement->execute();
-        $rides = $statement->fetchAll(PDO::FETCH_ASSOC);
-        ?>
-
-        <div class="container">
         <h1>Admin</h1>
 
         <a href="create.php">+ Attractie Toevoegen</a>
-    
+
         <div class="top">
-        <p>Totaal aantal Rides: <strong><?php echo count($rides); ?></strong></p>
+            <p>Totaal aantal Rides: <strong><?php echo count($rides); ?></strong></p>
 
-        <form action="" method="GET">
-            <?php
-            $query = "SELECT * FROM rides";
+            <form action="" method="GET">
+                <?php
+                $query = "SELECT * FROM rides";
 
-            if (!empty($_GET['type'])) {
-                $query .= " WHERE themeland = :type";
-            }
+                if (!empty($_GET['type'])) {
+                    $query .= " WHERE themeland = :type";
+                }
 
-            $query .= " ORDER BY id ASC";  // Hier sorteren we de resultaten op ID in oplopende volgorde
+                $query .= " ORDER BY id ASC";  // Hier sorteren we de resultaten op ID in oplopende volgorde
 
-            $statement = $conn->prepare($query);
+                $statement = $conn->prepare($query);
 
-            if (!empty($_GET['type'])) {
-                $statement->bindParam(':type', $_GET['type']);
-            }
+                if (!empty($_GET['type'])) {
+                    $statement->bindParam(':type', $_GET['type']);
+                }
 
-            $statement->execute();
-            $rides = $statement->fetchAll(PDO::FETCH_ASSOC);
-            ?>
+                $statement->execute();
+                $rides = $statement->fetchAll(PDO::FETCH_ASSOC);
+                ?>
 
-            <select name="type" id="group">
-                <option value="">-Kies een Themaland-</option>
-                <option value="waterland">Waterland</option>
-                <option value="familyland">Familyland</option>
-                <option value="adventureland">Adventureland</option>
-            </select>
+                <select name="type" id="group">
+                    <option value="">-Kies een Themaland-</option>
+                    <option value="waterland">Waterland</option>
+                    <option value="familyland">Familyland</option>
+                    <option value="adventureland">Adventureland</option>
+                </select>
 
-            <input type="submit" value="Filter">
-        </form>
+                <input type="submit" value="Filter">
+            </form>
         </div>
 
         <table>
@@ -94,6 +94,8 @@ if(!isset($_SESSION['user_id']))
 
     </div>
 
+</div>
+<?php require_once '../../footer.php'; ?>
 </body>
 
 </html>
