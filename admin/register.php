@@ -45,5 +45,6 @@ require_once 'backend/config.php';
 
         </form>
     </div>
+    <?php require_once '../footer.php'; ?>
 </body>
 </html>

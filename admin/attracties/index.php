@@ -94,7 +94,7 @@ if(!isset($_SESSION['user_id']))
     </div>
 
 </div>
-
+<?php require_once '../../footer.php'; ?>
 </body>
 
 </html>
