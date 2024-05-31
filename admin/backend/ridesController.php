@@ -17,7 +17,7 @@ if ($action == 'create') {
     $description = isset($_POST['description']) ? $_POST['description'] : '';
     $min_length = isset($_POST['min_length']) ? $_POST['min_length'] : 0; // Standby waarde ingesteld als min_length leeg is
 
-    if (!is_numeric($min_length)) {
+    if (!is_numeric($min_length) && !is_null($min_length)) {
         $errors[] = "Vul een geldig getal in voor de minimale lengte!";
     }
 
@@ -81,7 +81,7 @@ if($action == "update")
     $title = $_POST['title'];
     $themeland = $_POST['themeland'];
     $description = $_POST['description'];
-    $min_length = $_POST['min_length'];
+    $min_length = isset($_POST['min_length']) && is_numeric($_POST['min_length']) ? (int)$_POST['min_length'] : NULL;
     if(isset($_POST['new']))
     {
         $new = 1;

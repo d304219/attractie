@@ -24,23 +24,53 @@ require_once 'admin/backend/config.php';
 
         <?php
         require_once 'admin/backend/conn.php';
+
+        // Fetch all rides
         $query = "SELECT * FROM rides";
         $statement = $conn->prepare($query);
         $statement->execute();
         $rides = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        // Fetch the top 5 latest rides
+        $latestQuery = "SELECT * FROM rides ORDER BY created_at DESC LIMIT 5";
+        $latestStatement = $conn->prepare($latestQuery);
+        $latestStatement->execute();
+        $latestRides = $latestStatement->fetchAll(PDO::FETCH_ASSOC);
         ?>
 
         <h1>Attracties</h1>
 
         <p>Totaal aantal Attracties: <strong><?php echo count($rides); ?></strong></p>
 
+        <h2>Nieuwste Attracties</h2>
+        <div class="card-container">
+            <?php foreach($latestRides as $ride): ?>
+                <div class="card">
+                    <div class="card-img">
+                            <div class="new">Nieuw!</div>
+                        <img src="<?php echo $base_url; ?>/img/attracties/<?php echo $ride['img_file']; ?>" alt="<?php echo $ride['title']; ?>">
+                    </div>
+                    <div class="card-info">
+                        <div class="card-info-title">
+                            <h4><span style="text-transform:uppercase;"><?php echo $ride['themeland']; ?></span></h4>
+                            <h3><?php echo $ride['title']; ?></h3>
+                        </div>                    
+                        <p class="description"><?php echo $ride['description']?></p>
+                        <?php if($ride['min_length'] != 0): ?>
+                            <p class="length"><span style="font-weight: 400"><?php echo $ride['min_length']; ?>cm</span> minimale lengte</p>
+                        <?php else: ?>
+                            <p class="length">Geen lengtebeperking</p>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+
+        <h2>Alle Attracties</h2>
         <div class="card-container">
             <?php foreach($rides as $ride): ?>
                 <div class="card">
                     <div class="card-img">
-                        <?php if($ride['new'] != 0): ?>
-                            <div class="new">Nieuw!</div>
-                        <?php endif; ?>
                         <img src="<?php echo $base_url; ?>/img/attracties/<?php echo $ride['img_file']; ?>" alt="<?php echo $ride['title']; ?>">
                     </div>
                     <div class="card-info">
@@ -110,6 +140,5 @@ require_once 'admin/backend/config.php';
     });
     </script>
      <?php require_once 'footer.php'; ?>
-</body>
 </body>
 </html>

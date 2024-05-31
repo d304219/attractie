@@ -460,7 +460,10 @@ body {
   font-weight: bold;
   border-radius: 4px;
   text-transform: uppercase;
+  text-align: center;
+  width: 70px;
 }
+
 
 tr td{
   white-space: nowrap;
