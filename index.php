@@ -74,7 +74,6 @@ require_once 'admin/backend/config.php';
         const modal = document.querySelector('.modal');
         const modalContent = document.querySelector('.modal-content');
         const span = document.querySelector('.close');
-
         cards.forEach(card => {
             card.addEventListener('click', () => {
                 modalContent.innerHTML = card.innerHTML;
@@ -110,5 +109,7 @@ require_once 'admin/backend/config.php';
         });
     });
     </script>
+     <?php require_once 'footer.php'; ?>
+</body>
 </body>
 </html>
