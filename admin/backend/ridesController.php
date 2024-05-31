@@ -1,70 +1,62 @@
 <?php
 session_start();
 require_once '../backend/config.php';
-if(!isset($_SESSION['user_id']))
-{
+
+if (!isset($_SESSION['user_id'])) {
     $msg = "Je moet eerst inloggen!";
     header("Location: $base_url/admin/login.php?msg=$msg");
     exit;
 }
 
 $action = $_POST['action'];
-if($action == 'create')
-{
-    //Validatie
+
+if ($action == 'create') {
+    // Validatie
     $title = $_POST['title'];
     $themeland = $_POST['themeland'];
-    $description = isset($_POST['description']) ? $_POST['description'] : ''; // Controleer of de beschrijving is ingesteld
+    $description = isset($_POST['description']) ? $_POST['description'] : '';
+    $min_length = isset($_POST['min_length']) ? $_POST['min_length'] : 0; // Standby waarde ingesteld als min_length leeg is
 
-    if(empty($title))
-    {
+    if (!is_numeric($min_length)) {
+        $errors[] = "Vul een geldig getal in voor de minimale lengte!";
+    }
+
+    if (empty($title)) {
         $errors[] = "Vul een titel in!";
     }
 
-    if(empty($themeland))
-    {
+    if (empty($themeland)) {
         $errors[] = "Vul een themagebied in!";
     }
 
-    if(empty($description)) // Controleer of de beschrijving leeg is
-    {
+    if (empty($description)) {
         $errors[] = "Vul een beschrijving in!";
     }
 
-    if(!is_numeric($_POST['min_length']))
-    {
-        $errors[] = "Vul een getal in!";
-    }
-
-    if(isset($_POST['new']))
-    {
+    if (isset($_POST['new'])) {
         $new = 1;
-    }
-    else
-    {
+    } else {
         $new = 0;
     }
 
     $target_dir = "../../img/attracties/";
     $target_file = $_FILES['img_file']['name'];
-    if(file_exists($target_dir . $target_file))
-    {
+    if (file_exists($target_dir . $target_file)) {
         $errors[] = "Bestand bestaat al!";
     }
 
-    //Evt. errors dumpen
-    if(isset($errors))
-    {
+    // Eventuele foutmeldingen weergeven
+    if (isset($errors)) {
         var_dump($errors);
         die();
     }
 
-    //Plaats geuploade bestand in map
+    // Bestand verplaatsen naar map
     move_uploaded_file($_FILES['img_file']['tmp_name'], $target_dir . $target_file);
 
-    //Query
+    // Query
     require_once 'conn.php';
-    $query = "INSERT INTO rides (title, themeland, img_file, description, new, min_length ) VALUES(:title, :themeland, :img_file, :description,  :new, :min_length)";
+    $query = "INSERT INTO rides (title, themeland, img_file, description, new, min_length) VALUES(:title, :themeland, :img_file, :description, :new, :min_length)";
     $statement = $conn->prepare($query);
     $statement->execute([
         ":title" => $title,
@@ -72,12 +64,15 @@ if($action == 'create')
         ":description" => $description,
         ":new" => $new,
         ":img_file" => $target_file,
-        ":min_length" => $_POST['min_length']
+        ":min_length" => $min_length
     ]);
 
     header("Location: ../attracties/index.php");
     exit;
 }
+
+// De rest van je code voor update en delete acties...
+
 
 
 if($action == "update")
