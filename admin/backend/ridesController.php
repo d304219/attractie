@@ -56,19 +56,42 @@ if ($action == 'create') {
 
     // Query
     require_once 'conn.php';
-    $query = "INSERT INTO rides (title, themeland, img_file, description, new, min_length) VALUES(:title, :themeland, :img_file, :description, :new, :min_length)";
-    $statement = $conn->prepare($query);
-    $statement->execute([
-        ":title" => $title,
-        ":themeland" => $themeland,
-        ":description" => $description,
-        ":new" => $new,
-        ":img_file" => $target_file,
-        ":min_length" => $min_length
-    ]);
+ // Query for inserting data into the database
+$query = "INSERT INTO rides (title, themeland, img_file, description, new, min_length) VALUES(:title, :themeland, :img_file, :description, :new, :min_length)";
+$statement = $conn->prepare($query);
+$statement->execute([
+    ":title" => $title,
+    ":themeland" => $themeland,
+    ":description" => $description,
+    ":new" => $new,
+    ":img_file" => $target_file,
+    ":min_length" => $min_length
+]);
 
-    header("Location: ../attracties/index.php");
-    exit;
+// Fetch the ID of the newly inserted row
+$newly_inserted_id = $conn->lastInsertId();
+
+// Append the ID to the file name
+$target_file = $newly_inserted_id . '_' . $target_file;
+
+// Update the database with the new file name
+$query = "UPDATE rides SET img_file = :img_file WHERE id = :id";
+$statement = $conn->prepare($query);
+$statement->execute([
+    ":img_file" => $target_file,
+    ":id" => $newly_inserted_id
+]);
+
+$destination_path = $target_dir . $target_file;
+if (move_uploaded_file($_FILES['img_file']['tmp_name'], $destination_path)) {
+    // File moved successfully
+} else {
+    // File not moved
+    echo "Error moving file to destination.";
+}
+
+header("Location: ../attracties/index.php");
+exit;
 }
 
 // De rest van je code voor update en delete acties...
@@ -91,22 +114,21 @@ if($action == "update")
         $new = 0;
     }
 
-    if(empty($_FILES['img_file']['name']))
-    {
-        $target_file = $_POST['old_img'];
+// Inside the 'update' action block
+if (empty($_FILES['img_file']['name'])) {
+    $target_file = $_POST['old_img'];
+} else {
+    $target_dir = "../../img/attracties/";
+    $target_file = $_FILES['img_file']['name'];
+    $newly_inserted_id = $_POST['id']; // Assuming the ID is passed through a hidden input field
+    $target_file = $newly_inserted_id . '_' . $target_file;
+    if (file_exists($target_dir . $target_file)) {
+        $errors[] = "File already exists!";
     }
-    else
-    {
-        $target_dir = "../../img/attracties/";
-        $target_file = $_FILES['img_file']['name'];
-        if(file_exists($target_dir . $target_file))
-        {
-            $errors[] = "Bestand bestaat al!";
-        }
 
-        //Plaats geuploade bestand in map
-        move_uploaded_file($_FILES['img_file']['tmp_name'], $target_dir . $target_file);
-    }
+    // Rest of the code remains unchanged
+}
+
 
     //Evt. errors dumpen
     if(isset($errors))
