@@ -15,7 +15,7 @@ if ($action == 'create') {
     $title = $_POST['title'];
     $themeland = $_POST['themeland'];
     $description = isset($_POST['description']) ? $_POST['description'] : '';
-    $min_length = isset($_POST['min_length']) ? $_POST['min_length'] : 0; // Standby waarde ingesteld als min_length leeg is
+    $min_length = isset($_POST['min_length']) && is_numeric($_POST['min_length']) ? (int)$_POST['min_length'] : NULL; // Set default value to NULL if min_length is empty
 
     if (!is_numeric($min_length) && !is_null($min_length)) {
         $errors[] = "Vul een geldig getal in voor de minimale lengte!";
@@ -31,12 +31,6 @@ if ($action == 'create') {
 
     if (empty($description)) {
         $errors[] = "Vul een beschrijving in!";
-    }
-
-    if (isset($_POST['new'])) {
-        $new = 1;
-    } else {
-        $new = 0;
     }
 
     $target_dir = "../../img/attracties/";
@@ -56,13 +50,12 @@ if ($action == 'create') {
     // Query
     require_once 'conn.php';
  // Query for inserting data into the database
-$query = "INSERT INTO rides (title, themeland, img_file, description, new, min_length) VALUES(:title, :themeland, :img_file, :description, :new, :min_length)";
+$query = "INSERT INTO rides (title, themeland, img_file, description, min_length) VALUES(:title, :themeland, :img_file, :description, :min_length)";
 $statement = $conn->prepare($query);
 $statement->execute([
     ":title" => $title,
     ":themeland" => $themeland,
     ":description" => $description,
-    ":new" => $new,
     ":img_file" => $target_file,
     ":min_length" => $min_length
 ]);
@@ -94,57 +87,68 @@ exit;
 }
 
 // De rest van je code voor update en delete acties...
-
-
-
-if($action == "update")
-{
+if ($action == "update") {
     $id = $_POST['id'];
     $title = $_POST['title'];
     $themeland = $_POST['themeland'];
     $description = $_POST['description'];
     $min_length = isset($_POST['min_length']) && is_numeric($_POST['min_length']) ? (int)$_POST['min_length'] : NULL;
-    if(isset($_POST['new']))
-    {
-        $new = 1;
-    }
-    else
-    {
-        $new = 0;
-    }
 
-// Inside the 'update' action block
-if (empty($_FILES['img_file']['name'])) {
-    $target_file = $_POST['old_img'];
-} else {
-    $target_dir = "../../img/attracties/";
-    $target_file = $_FILES['img_file']['name'];
-    $newly_inserted_id = $_POST['id']; // Assuming the ID is passed through a hidden input field
-    $target_file = $newly_inserted_id . '_' . $target_file;
-    if (file_exists($target_dir . $target_file)) {
-        $errors[] = "File already exists!";
+    // Query to fetch the current image file name
+    require_once 'conn.php';
+    $query = "SELECT img_file FROM rides WHERE id = :id";
+    $statement = $conn->prepare($query);
+    $statement->execute([":id" => $id]);
+    $ride = $statement->fetch(PDO::FETCH_ASSOC);
+
+    if (!$ride) {
+        echo "Ride not found.";
+        exit;
     }
 
-    // Rest of the code remains unchanged
-}
+    $current_img_file = $ride['img_file'];
+    $target_file = $current_img_file; // Default to the current file name
 
+    // Check if a new file is uploaded
+    if (isset($_FILES['img_file']) && $_FILES['img_file']['error'] == UPLOAD_ERR_OK) {
+        $target_dir = "../../img/attracties/";
+        $target_file_name = $_FILES['img_file']['name'];
+        $target_file = $id . '_' . $target_file_name;
 
-    //Evt. errors dumpen
-    if(isset($errors))
-    {
+        // Check if the file already exists
+        if (file_exists($target_dir . $target_file)) {
+            $errors[] = "File already exists!";
+        }
+
+        // Delete the old file if it exists
+        if (file_exists($target_dir . $current_img_file)) {
+            if (!unlink($target_dir . $current_img_file)) {
+                echo "Error deleting old file.";
+                exit;
+            }
+        }
+
+        // Move the uploaded file to the target directory
+        $destination_path = $target_dir . $target_file;
+        if (!move_uploaded_file($_FILES['img_file']['tmp_name'], $destination_path)) {
+            echo "Error moving file to destination.";
+            exit;
+        }
+    }
+
+    // Handle errors
+    if (isset($errors)) {
         var_dump($errors);
         die();
     }
 
-    //Query
-    require_once 'conn.php';
-    $query = "UPDATE rides SET title = :title, themeland = :themeland, img_file = :img_file, description = :description, new = :new, min_length = :min_length WHERE id = :id";
+    // Update query
+    $query = "UPDATE rides SET title = :title, themeland = :themeland, img_file = :img_file, description = :description, min_length = :min_length WHERE id = :id";
     $statement = $conn->prepare($query);
     $statement->execute([
         ":title" => $title,
         ":themeland" => $themeland,
         ":description" => $description,
-        ":new" => $new,
         ":img_file" => $target_file,
         ":min_length" => $min_length,
         ":id" => $id
@@ -153,6 +157,7 @@ if (empty($_FILES['img_file']['name'])) {
     header("Location: ../attracties/index.php");
     exit;
 }
+
 
 if($action == "delete")
 {
