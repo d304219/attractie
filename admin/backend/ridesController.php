@@ -52,7 +52,6 @@ if ($action == 'create') {
     }
 
     // Bestand verplaatsen naar map
-    move_uploaded_file($_FILES['img_file']['tmp_name'], $target_dir . $target_file);
 
     // Query
     require_once 'conn.php';
