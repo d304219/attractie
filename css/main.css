@@ -648,6 +648,10 @@ a:hover {
   max-width: 600px;
 }
 
+.modal-body .card {
+  width: 100%;
+}
+
 .close {
   color: #aaa;
   float: right;
@@ -662,25 +666,16 @@ a:hover {
   cursor: pointer;
 }
 
-.read-more {
+.read-more,
+.read-less {
   color: blue;
   cursor: pointer;
 }
 
-/* New styles for limiting the description height and hiding overflow */
 .description {
-  max-height: 3em;
-  overflow: hidden;
   position: relative;
-  display: -webkit-box;
-  -webkit-line-clamp: 2; /* Number of lines to show */
-  -webkit-box-orient: vertical;
 }
 
-.description.expanded {
-  max-height: none;
-  -webkit-line-clamp: unset;
-}
 footer {
   background-color: #19536e;
   color: #fff;
