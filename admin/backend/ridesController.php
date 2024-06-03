@@ -33,61 +33,51 @@ if ($action == 'create') {
         $errors[] = "Vul een beschrijving in!";
     }
 
-    $target_dir = "../../img/attracties/";
-    $target_file = $_FILES['img_file']['name'];
-    if (file_exists($target_dir . $target_file)) {
-        $errors[] = "Bestand bestaat al!";
-    }
-
     // Eventuele foutmeldingen weergeven
     if (isset($errors)) {
         var_dump($errors);
         die();
     }
 
-    // Bestand verplaatsen naar map
-
     // Query
     require_once 'conn.php';
- // Query for inserting data into the database
-$query = "INSERT INTO rides (title, themeland, img_file, description, min_length) VALUES(:title, :themeland, :img_file, :description, :min_length)";
-$statement = $conn->prepare($query);
-$statement->execute([
-    ":title" => $title,
-    ":themeland" => $themeland,
-    ":description" => $description,
-    ":img_file" => $target_file,
-    ":min_length" => $min_length
-]);
+    // Insert data into the database with a placeholder for img_file
+    $query = "INSERT INTO rides (title, themeland, description, min_length, img_file) VALUES(:title, :themeland, :description, :min_length, '')";
+    $statement = $conn->prepare($query);
+    $statement->execute([
+        ":title" => $title,
+        ":themeland" => $themeland,
+        ":description" => $description,
+        ":min_length" => $min_length
+    ]);
 
-// Fetch the ID of the newly inserted row
-$newly_inserted_id = $conn->lastInsertId();
+    // Fetch the ID of the newly inserted row
+    $newly_inserted_id = $conn->lastInsertId();
 
-// Append the ID to the file name
-$target_file = $newly_inserted_id . '_' . $target_file;
+    $target_dir = "../../img/attracties/";
+    $target_file = $newly_inserted_id . '.' . pathinfo($_FILES['img_file']['name'], PATHINFO_EXTENSION);
 
-// Update the database with the new file name
-$query = "UPDATE rides SET img_file = :img_file WHERE id = :id";
-$statement = $conn->prepare($query);
-$statement->execute([
-    ":img_file" => $target_file,
-    ":id" => $newly_inserted_id
-]);
+    // Update the database with the new file name
+    $query = "UPDATE rides SET img_file = :img_file WHERE id = :id";
+    $statement = $conn->prepare($query);
+    $statement->execute([
+        ":img_file" => $target_file,
+        ":id" => $newly_inserted_id
+    ]);
 
-$destination_path = $target_dir . $target_file;
-if (move_uploaded_file($_FILES['img_file']['tmp_name'], $destination_path)) {
-    // File moved successfully
-} else {
-    // File not moved
-    echo "Error moving file to destination.";
+    $destination_path = $target_dir . $target_file;
+    if (move_uploaded_file($_FILES['img_file']['tmp_name'], $destination_path)) {
+        // File moved successfully
+    } else {
+        // File not moved
+        echo "Error moving file to destination.";
+    }
+
+    header("Location: ../attracties/index.php");
+    exit;
 }
 
-header("Location: ../attracties/index.php");
-exit;
-}
-
-// De rest van je code voor update en delete acties...
-if ($action == "update") {
+if ($action == 'update') {
     $id = $_POST['id'];
     $title = $_POST['title'];
     $themeland = $_POST['themeland'];
@@ -106,40 +96,28 @@ if ($action == "update") {
         exit;
     }
 
-    $current_img_file = $ride['img_file'];
-    $target_file = $current_img_file; // Default to the current file name
-
-    // Check if a new file is uploaded
-    if (isset($_FILES['img_file']) && $_FILES['img_file']['error'] == UPLOAD_ERR_OK) {
-        $target_dir = "../../img/attracties/";
-        $target_file_name = $_FILES['img_file']['name'];
-        $target_file = $id . '_' . $target_file_name;
-
-        // Check if the file already exists
-        if (file_exists($target_dir . $target_file)) {
-            $errors[] = "File already exists!";
-        }
-
-        // Delete the old file if it exists
-        if (file_exists($target_dir . $current_img_file)) {
-            if (!unlink($target_dir . $current_img_file)) {
-                echo "Error deleting old file.";
-                exit;
-            }
-        }
-
-        // Move the uploaded file to the target directory
-        $destination_path = $target_dir . $target_file;
-        if (!move_uploaded_file($_FILES['img_file']['tmp_name'], $destination_path)) {
-            echo "Error moving file to destination.";
-            exit;
-        }
-    }
+    $old_img_file = $ride['img_file'];
+    $target_dir = "../../img/attracties/";
+    $new_img_file = isset($_FILES['img_file']['name']) ? $id . '.' . pathinfo($_FILES['img_file']['name'], PATHINFO_EXTENSION) : $old_img_file;
 
     // Handle errors
     if (isset($errors)) {
         var_dump($errors);
         die();
+    }
+    
+    if (!empty($_FILES['img_file']['name' ])) {
+       
+        $destination_path = $target_dir . $new_img_file;
+        // Move the uploaded file to the target directory
+        if (move_uploaded_file($_FILES['img_file']['tmp_name'], $destination_path)) {
+            // File moved successfully
+            // Delete the old image file if a new one was uploaded
+           
+        } else {
+            echo "Error moving file to destination.";
+            exit;
+        }
     }
 
     // Update query
@@ -149,7 +127,7 @@ if ($action == "update") {
         ":title" => $title,
         ":themeland" => $themeland,
         ":description" => $description,
-        ":img_file" => $target_file,
+        ":img_file" => $new_img_file,
         ":min_length" => $min_length,
         ":id" => $id
     ]);
@@ -158,16 +136,33 @@ if ($action == "update") {
     exit;
 }
 
-
-if($action == "delete")
-{
+if ($action == "delete") {
     $id = $_POST['id'];
     require_once 'conn.php';
+    $query = "SELECT img_file FROM rides WHERE id = :id";
+    $statement = $conn->prepare($query);
+    $statement->execute([":id" => $id]);
+    $ride = $statement->fetch(PDO::FETCH_ASSOC);
+
+    if (!$ride) {
+        echo "Ride not found.";
+        exit;
+    }
+
+    $old_img_file = $ride['img_file'];
+    $target_dir = "../../img/attracties/";
+
+    // Delete the record from the database
     $query = "DELETE FROM rides WHERE id = :id";
     $statement = $conn->prepare($query);
-    $statement->execute([
-        ":id" => $id
-    ]);
+    $statement->execute([":id" => $id]);
+
+    // Delete the old image file
+    if ($old_img_file) {
+        unlink($target_dir . $old_img_file);
+    }
+
     header("Location: ../attracties/index.php");
     exit;
 }
+?>

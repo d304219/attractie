@@ -32,7 +32,7 @@ if(!isset($_SESSION['user_id']))
         $ride = $statement->fetch(PDO::FETCH_ASSOC);
         ?>
 
-        <form action="../backend/ridesController.php" method="POST">
+        <form action="../backend/ridesController.php" method="POST" enctype="multipart/form-data">
             <input type="hidden" name="action" value="update">
             <input type="hidden" name="id" value="<?php echo $id; ?>">
             <input type="hidden" name="old_img" value="<?php echo $ride['img_file']; ?>">
