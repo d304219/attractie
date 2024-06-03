@@ -95,7 +95,6 @@ require_once 'admin/backend/config.php';
     <div class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <div class="modal-body"></div>
         </div>
     </div>
 
@@ -103,28 +102,12 @@ require_once 'admin/backend/config.php';
     document.addEventListener('DOMContentLoaded', () => {
         const cards = document.querySelectorAll('.card');
         const modal = document.querySelector('.modal');
-        const modalContent = document.querySelector('.modal-body');
+        const modalContent = document.querySelector('.modal-content');
         const span = document.querySelector('.close');
-
         cards.forEach(card => {
-            const readMore = document.createElement('span');
-            readMore.textContent = ' Lees meer';
-            readMore.classList.add('read-more');
-            card.querySelector('.description').parentNode.appendChild(readMore);
-
-            readMore.addEventListener('click', (event) => {
-                event.stopPropagation();
-                const ride = card.cloneNode(true);
-                modalContent.innerHTML = '';
-                modalContent.appendChild(ride);
+            card.addEventListener('click', () => {
+                modalContent.innerHTML = card.innerHTML;
                 modal.style.display = "block";
-                const readLess = ride.querySelector('.read-more');
-                readLess.textContent = ' Lees minder';
-                readLess.classList.add('read-less');
-                readLess.classList.remove('read-more');
-                readLess.addEventListener('click', () => {
-                    modal.style.display = "none";
-                });
             });
         });
 
@@ -137,8 +120,25 @@ require_once 'admin/backend/config.php';
                 modal.style.display = "none";
             }
         });
+
+        document.querySelectorAll('.description').forEach(description => {
+            const readMore = document.createElement('span');
+            readMore.textContent = ' Lees meer';
+            readMore.classList.add('read-more');
+            description.parentNode.appendChild(readMore);
+
+            readMore.addEventListener('click', () => {
+                if (description.classList.contains('expanded')) {
+                    description.classList.remove('expanded');
+                    readMore.textContent = ' Lees meer';
+                } else {
+                    description.classList.add('expanded');
+                    readMore.textContent = ' Lees minder';
+                }
+            });
+        });
     });
     </script>
-    <?php require_once 'footer.php'; ?>
+     <?php require_once 'footer.php'; ?>
 </body>
 </html>

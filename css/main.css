@@ -648,7 +648,7 @@ a:hover {
   max-width: 600px;
 }
 
-.modal-body .card {
+.modal-body>.card {
   width: 100%;
 }
 
@@ -672,8 +672,13 @@ a:hover {
   cursor: pointer;
 }
 
-.description {
+.card>*>.description {
   position: relative;
+  max-height: 3em;
+  text-overflow: ellipsis;
+  
+  overflow: hidden;
+  word-wrap:normal;
 }
 
 footer {
