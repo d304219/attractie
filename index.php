@@ -5,8 +5,9 @@ require_once 'admin/backend/config.php';
 
 <!doctype html>
 <html lang="nl">
-    <?php require_once "head.php"; ?>
-    <title>Attractiepagina</title>
+<?php require_once "head.php"; ?>
+<title>Attractiepagina</title>
+
 <body>
 
     <?php require_once 'header.php'; ?>
@@ -47,7 +48,7 @@ require_once 'admin/backend/config.php';
             <?php foreach($latestRides as $ride): ?>
                 <div class="card">
                     <div class="card-img">
-                            <div class="new">Nieuw!</div>
+                        <div class="new">Nieuw!</div>
                         <img src="<?php echo $base_url; ?>/img/attracties/<?php echo $ride['img_file']; ?>" alt="<?php echo $ride['title']; ?>">
                     </div>
                     <div class="card-info">
@@ -122,23 +123,16 @@ require_once 'admin/backend/config.php';
         });
 
         document.querySelectorAll('.description').forEach(description => {
-            const readMore = document.createElement('span');
-            readMore.textContent = ' Lees meer';
-            readMore.classList.add('read-more');
-            description.parentNode.appendChild(readMore);
-
-            readMore.addEventListener('click', () => {
+            description.addEventListener('click', () => {
                 if (description.classList.contains('expanded')) {
                     description.classList.remove('expanded');
-                    readMore.textContent = ' Lees meer';
                 } else {
                     description.classList.add('expanded');
-                    readMore.textContent = ' Lees minder';
                 }
             });
         });
     });
     </script>
-     <?php require_once 'footer.php'; ?>
+    <?php require_once 'footer.php'; ?>
 </body>
 </html>
