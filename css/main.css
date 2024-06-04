@@ -450,16 +450,6 @@ body {
   transition: transform 0.2s;
 }
 
-.modal-content {
-  display: flex;
-  flex-direction: column;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  background-color: #dce3f0;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  transition: transform 0.2s;
-}
 
 .new {
   position: absolute;
@@ -473,6 +463,8 @@ body {
   text-transform: uppercase;
   text-align: center;
   width: 70px;
+  text-overflow: ellipsis;
+
 }
 
 
@@ -652,11 +644,19 @@ a:hover {
 
 .modal-content {
   background-color: #fefefe;
-  margin: 5% auto;
+  margin: 0 auto;
   padding: 20px;
   border: 1px solid #888;
   width: 80%;
   max-width: 600px;
+
+
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background-color: #dce3f0;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+
 }
 
 .modal-body>.card {
