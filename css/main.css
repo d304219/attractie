@@ -438,10 +438,21 @@ body {
   margin-top: 20px;
 }
 
-.card {
+.card{
   display: flex;
   flex-direction: column;
   position: relative;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background-color: #dce3f0;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.2s;
+}
+
+.modal-content {
+  display: flex;
+  flex-direction: column;
   border: 1px solid #ddd;
   border-radius: 10px;
   background-color: #dce3f0;
