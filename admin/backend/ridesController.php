@@ -98,7 +98,7 @@ if ($action == 'update') {
 
     $old_img_file = $ride['img_file'];
     $target_dir = "../../img/attracties/";
-    $new_img_file = isset($_FILES['img_file']['name']) && !empty($_FILES['img_file']['name']) ? $id . '.' . pathinfo($_FILES['img_file']['name'], PATHINFO_EXTENSION) : $old_img_file;
+    $new_img_file = isset($_FILES['img_file']['name']) ? $id . '.' . pathinfo($_FILES['img_file']['name'], PATHINFO_EXTENSION) : $old_img_file;
 
     // Handle errors
     if (isset($errors)) {
@@ -106,11 +106,14 @@ if ($action == 'update') {
         die();
     }
     
-    if (!empty($_FILES['img_file']['name'])) {
+    if (!empty($_FILES['img_file']['name' ])) {
+       
         $destination_path = $target_dir . $new_img_file;
         // Move the uploaded file to the target directory
         if (move_uploaded_file($_FILES['img_file']['tmp_name'], $destination_path)) {
             // File moved successfully
+            // Delete the old image file if a new one was uploaded
+           
         } else {
             echo "Error moving file to destination.";
             exit;
